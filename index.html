@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#5b3df5">
+  <meta name="description" content="PocketSmart AI — a smart budget and recommendation assistant for interiors, parties, and jewellery.">
+  <title>PocketSmart AI</title>
+  <link rel="icon" type="image/svg+xml" href="/static/images/favicon.svg">
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <div class="shell app-shell" id="app-shell">
+    <header class="topbar">
+      <div class="brand" aria-label="PocketSmart AI home">
+        <div class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="none"><path d="M5 10h22v15a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4V10Z" fill="currentColor"/><path d="M8 6h15a4 4 0 0 1 4 4H5a4 4 0 0 1 3-4Z" fill="#b7f7dc"/><circle cx="23" cy="19" r="2.5" fill="#5b3df5"/></svg>
+        </div>
+        <div><div class="brand-name">PocketSmart <span>AI</span></div><div class="brand-sub">Smart Budget Assistant</div></div>
+      </div>
+      <div class="site-status" id="api-status"><span></span><b>Connecting…</b></div>
+    </header>
+
+    <div class="workspace">
+      <aside class="sidebar">
+        <nav class="nav" aria-label="Main navigation">
+          <button class="nav-btn active" data-view="planner">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 11 9-8 9 8v9a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1v-9Z"/></svg>Plan Budget
+          </button>
+          <button class="nav-btn" data-view="history">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5M12 7v5l3 2"/></svg>Saved Plans
+          </button>
+        </nav>
+        <div class="tip"><span class="tip-badge">SMART TIP</span><strong>Keep 10% as backup</strong><p>A small reserve makes every plan safer and easier to adjust.</p></div>
+      </aside>
+
+      <main class="main">
+        <section class="planner-panel" id="planner-view">
+          <div class="hero">
+            <div><p class="eyebrow">Smart Budget Assistant</p><h1>Plan smarter. Spend better.</h1><p>Build a clear plan that stays inside your budget.</p></div>
+            <div class="mode" id="ai-mode"><span class="mode-dot"></span><b>Checking AI…</b></div>
+          </div>
+
+          <div class="overview">
+            <article class="budget-card">
+              <small>Your selected budget</small><h2 id="budget-display">₹25,000</h2>
+              <div class="progress"><span id="budget-progress"></span></div>
+              <div class="budget-meta"><span>Planned safely</span><span id="progress-label">90% used</span></div>
+            </article>
+            <article class="card insight-card">
+              <div class="insight-top"><div class="insight-icon">💡</div><div class="saving" id="saving-display">₹2,500</div></div>
+              <h2>Reserved for flexibility</h2><p>Your plan keeps a safety amount for price changes.</p>
+            </article>
+          </div>
+
+          <div class="planner-grid">
+            <form class="card" id="planner-form">
+              <div class="card-head"><h2>Create a smart plan</h2><span class="step">3 steps</span></div>
+
+              <div class="field">
+                <span class="field-label">1. What are you planning?</span>
+                <div class="categories">
+                  <div><input class="category-input" id="home" type="radio" name="category" value="home" checked><label class="category" for="home"><span class="category-emoji">🛋️</span><strong>Home Interior</strong></label></div>
+                  <div><input class="category-input" id="party" type="radio" name="category" value="party"><label class="category" for="party"><span class="category-emoji">🎉</span><strong>Party Planner</strong></label></div>
+                  <div><input class="category-input" id="jewellery" type="radio" name="category" value="jewellery"><label class="category" for="jewellery"><span class="category-emoji">💍</span><strong>Jewellery</strong></label></div>
+                </div>
+              </div>
+
+              <div class="field">
+                <label class="field-label" for="budget">2. Set your budget</label>
+                <div class="input-wrap"><span class="currency">₹</span><input id="budget" type="number" min="5000" max="200000" step="1000" value="25000" inputmode="numeric"></div>
+                <input id="budget-range" type="range" min="5000" max="200000" step="1000" value="25000" aria-label="Budget range">
+                <div class="range-meta"><span>₹5,000</span><span>₹2,00,000</span></div>
+              </div>
+
+              <div class="field">
+                <span class="field-label">3. Choose your preference</span>
+                <div class="choices">
+                  <div><input class="choice-input" id="essential" type="radio" name="preference" value="Essential"><label class="choice" for="essential"><strong>Essential</strong><small>Best value</small></label></div>
+                  <div><input class="choice-input" id="balanced" type="radio" name="preference" value="Balanced" checked><label class="choice" for="balanced"><strong>Balanced</strong><small>Good mix</small></label></div>
+                  <div><input class="choice-input" id="premium" type="radio" name="preference" value="Premium"><label class="choice" for="premium"><strong>Premium</strong><small>Top quality</small></label></div>
+                </div>
+              </div>
+
+              <div class="field"><label class="field-label" for="notes">Additional notes (optional)</label><textarea id="notes" placeholder="Example: modern style, 20 guests, daily wear..."></textarea></div>
+              <button class="primary-btn" id="generate-button" type="submit"><span aria-hidden="true">✦</span><span class="button-label">Generate Smart Plan</span></button>
+            </form>
+
+            <article class="card result-card" aria-live="polite">
+              <div class="result-head">
+                <div>
+                  <div class="result-title-line"><h2>AI Recommendations</h2><span class="source-badge" id="source-badge">Loading</span></div>
+                  <p id="result-caption">Balanced Home Interior plan</p>
+                  <p class="result-summary" id="result-summary">Creating your safe budget plan…</p>
+                </div>
+                <div class="result-total"><span>Remaining</span><strong id="remaining-top">₹2,500</strong></div>
+              </div>
+              <div class="items" id="recommendation-items"></div>
+              <div class="totals">
+                <div class="total-box"><span>Estimated total</span><strong id="estimated-total">₹22,500</strong></div>
+                <div class="total-box good"><span>Safety reserve</span><strong id="remaining-total">₹2,500</strong></div>
+              </div>
+              <button class="save-btn" id="save-plan" type="button">▣ Save this plan</button>
+            </article>
+          </div>
+        </section>
+
+        <section class="history-panel card" id="history-view">
+          <div class="history-tools"><div><p class="eyebrow">Your collection</p><h2>Saved Plans</h2></div><input class="search" id="history-search" type="search" placeholder="Search saved plans" aria-label="Search saved plans"></div>
+          <div class="history-list" id="history-list"></div>
+        </section>
+
+        <nav class="mobile-nav" aria-label="Mobile navigation">
+          <button class="active" data-view="planner">Plan</button><button data-view="history">History</button>
+        </nav>
+      </main>
+    </div>
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+
+  <script src="/static/js/app.js"></script>
+</body>
+</html>
